@@ -40,14 +40,9 @@ const weatherData = reactive({
 
 // 取出天气平均值
 const getTemperature = (min, max) => {
-  try {
-    // 计算平均值并四舍五入
-    const average = (Number(min) + Number(max)) / 2;
-    return Math.round(average);
-  } catch (error) {
-    console.error("计算温度出现错误：", error);
-    return "NaN";
-  }
+  const a = Number(min), b = Number(max);
+  if (!Number.isFinite(a) || !Number.isFinite(b)) return "--";
+  return Math.round((a + b) / 2);
 };
 
 // 获取天气数据

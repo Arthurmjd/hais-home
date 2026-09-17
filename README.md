@@ -1,124 +1,177 @@
-简体中文 | [English](./README_EN.md)
+# 研习轩 · 个人主页
 
-> [!IMPORTANT]
-> ## 致大家
-> 此项目最初只是一个简单的主页。然而，随着越来越多的小伙伴发现了这个项目，它受到了大量本不应有的关注。而且，此项目作为初学前端的作品，其代码相当杂乱且质量低下。此外，该项目还遭到众多不明资源站或下载站的倒卖，致使许多不明真相的购买者从源代码中找到本人的联系方式进行问题咨询或提出功能需求。由于目前个人原因，该仓库进行存档，敬请谅解！
+> **本项目基于原作者的 [無名の主页](https://github.com/imsyy/home) 二次开发**，在原项目基础上做了个性化定制。
+> 原项目作者为 [imsyy](https://imsyy.top)，采用 MIT 协议，版权归原作者所有，详见 [LICENSE](./LICENSE)。
 
-<p>
-<strong><h2>無名の主页</h2></strong>
-简单的小主页，原来的看够了，重新弄了一个
-</p>
+一个用来聚合个人简介、社交入口、常用站点、一言、时间天气与时光进度的单页个人主页。
 
-![無名の主页](/screenshots/main.jpg)
+![界面预览](./screenshots/main.jpg)
 
-> 主页的 Logo 字体已经过压缩，若用本站 Logo 以外的字母会变回默认字体，这里是 [完整字体](https://file.imsyy.top/font/Other/Pacifico-Regular.ttf)，若无法下载，可将字体目录下的 `Pacifico-Regular-all.ttf` 进行替换
+---
 
-### 👀 Demo
+## 关于本项目
 
-> 由于 CDN 缓存原因，查看最新效果可能需要 `Ctrl` + `F5` 强制刷新浏览器缓存
+**本项目并非原创作品。** 它 fork 自 [imsyy/home](https://github.com/imsyy/home) v4.1.4，功能设计、组件划分与绝大部分源码均来自原作者，我只在此基础上做配置层面的定制与少量调整。
 
-- [無名の主页](https://www.imsyy.top)
-- [無名の主页 - Dev](https://home-imsyy.vercel.app)
-- [無名の主页 - 备用线路](https://home-5iw.pages.dev)
+|          | 原项目                                      | 本项目                             |
+| -------- | ------------------------------------------- | ---------------------------------- |
+| 作者     | [imsyy](https://imsyy.top)                  | Axiuss                             |
+| 仓库     | [imsyy/home](https://github.com/imsyy/home) | 本仓库（个人自用）                 |
+| 站点     | www.imsyy.top                               | [dxhyyds.top](https://dxhyyds.top) |
+| 站点名称 | 無名の主页                                  | 研习轩                             |
+| 协议     | MIT                                         | MIT（保留原作者版权声明）          |
 
-### 🎉 功能
+原仓库现已存档，因此本项目后续的修改与维护均由我自行进行，**与原作者无关**；如遇问题请不要去打扰原作者。
 
-- [x] 载入动画
-- [x] 站点简介
-- [x] Hitokoto 一言
-- [x] 日期及时间
-- [x] 实时天气
-- [x] 时光进度条
-- [x] 音乐播放器
-- [x] 移动端适配
+### 相对原项目的定制内容
 
-### ⚙️ 自动部署
+- **站点信息**：站点名称、作者、简介、关键词、备案号、建站日期全部替换为个人资料，均在 `.env` 中配置。
+- **社交链接与站点链接**：改为个人账号与常用站点（见 `src/assets/`）。
+- **音乐播放器**：默认关闭（`.env` 中 `VITE_SONG_ID` 留空时不会渲染播放器）。
+- **素材**：站点图标与壁纸沿用原项目提供的本地素材。
 
-如果遇到构建环境或者打包过程出现错误，则可以采用 `Github Actions` 来进行自动构建
+> 除上述配置层面的调整外，**代码结构与样式体系完全沿用原项目，未做结构性改动**。
 
-- 在成功 `fork` 仓库后，前往 `Actions` 页面，若您是首次开启，则会出现下面的提示，点击开启
+---
 
-  ![步骤1](/screenshots/step1.jpg)
+## 功能
 
-- 然后在仓库中进行任意修改后均会触发工作流的运行，在工作流完成后，会在下方生成一个可供下载的压缩包，这就是构建出的静态文件，可自行上传至服务器
+- 载入动画
+- 站点简介卡片
+- Hitokoto 一言（点击可换一句）
+- 日期与实时时间
+- 实时天气（高德开放平台，未配置 Key 时回落到备用接口）
+- 时光胶囊：今日 / 本周 / 本月 / 本年进度，以及建站天数统计
+- 音乐播放器（基于 APlayer + Meting API，本项目默认关闭）
+- 壁纸切换：默认壁纸 / 每日一图 / 随机风景 / 随机动漫
+- 鼠标中键快速进入壁纸展示模式
+- PWA 离线缓存
+- 移动端适配
 
-  ![步骤2](/screenshots/step2.jpg)
+---
 
-### ⚙️ 手动部署
+## 技术栈
 
-- **安装** [node.js](https://nodejs.org/zh-cn/) **环境**
+- [Vue 3](https://cn.vuejs.org/)（`<script setup>` 语法）
+- [Vite](https://cn.vitejs.dev/)
+- [Pinia](https://pinia.vuejs.org/zh/)（含 `pinia-plugin-persistedstate` 本地持久化）
+- [Element Plus](https://element-plus.org/zh-CN/)（按需自动引入）
+- [IconPark](https://iconpark.oceanengine.com/official) / [xicons](https://xicons.org/) 图标
+- [Swiper](https://swiperjs.com/) 站点链接轮播
+- [APlayer](https://aplayer.js.org/) 音乐播放器
+- [vite-plugin-pwa](https://vite-pwa-org.netlify.app/) + Workbox
+- Sass（SCSS）
 
-  > node > 16.16.0  
-  > npm > 8.15.0
+---
 
-- 然后以 **管理员权限** 运行 `cmd` 终端，并 `cd` 到 项目根目录
-- 在 `终端` 中输入：
+## 快速开始
 
 ```bash
-# 安装 pnpm
-npm install -g pnpm
-
 # 安装依赖
 pnpm install
 
-# 预览
+# 启动开发服务器（默认 http://localhost:3000，会自动打开浏览器）
 pnpm dev
 
-# 构建
+# 构建生产版本，产物输出到 dist/
 pnpm build
+
+# 本地预览构建产物
+pnpm preview
+
+# 代码格式化 / 检查
+pnpm format
+pnpm lint
 ```
 
-> 构建完成后，静态资源会在 **`dist` 目录** 中生成，可将 **`dist` 文件夹下的文件**上传至服务器，也可使用 `Vercel` 等托管平台一键导入并自动部署
+> 实测环境：Node.js v22.22.2 + pnpm，构建约 27 秒。理论上 Node 18 及以上均可运行。
 
-### ⚙️ Docker 部署
+### 首次配置
 
-> 安装及配置 Docker 将不在此处说明，请自行解决
+1. 复制 `.env.example` 为 `.env`（**必须**，否则站点信息、图标全部为空）
+2. 按下方说明填写 `.env` 中的各项配置
+3. 按需修改 `src/assets/siteLinks.json` 与 `src/assets/socialLinks.json`
 
 ```bash
-# 构建
-docker build -t home .
-# 运行
-docker run -p 12445:12445 -d home
+cp .env.example .env
 ```
 
-### ⚙️ Vercel 部署
+---
 
-> 其他部署平台大致相同，在此不做说明
+## 配置说明（.env）
 
-1. 点击本仓库右上角的 `Fork`，复制本仓库到你的 `GitHub` 账号
-2. 复制 `/.env.example` 文件并重命名为 `/.env`（ 重要 ）
-3. 按需修改 `/.env` 文件中的配置
-4. 点击 `Deploy`，即可成功部署
+`.env` 已被 `.gitignore` 忽略，不会进入版本库。所有变量都以 `VITE_` 开头，构建时会被静态替换进代码，因此**不要往里放任何私密密钥**（前端代码中的 Key 对访客是可见的）。
 
-### 网站链接
+### 站点信息
 
-在 `src/assets/siteLinks.json` 中可以自定义网站链接（以指向自己的网站）:
+| 变量                   | 说明                                                          |
+| ---------------------- | ------------------------------------------------------------- |
+| `VITE_SITE_NAME`       | 站点名称，显示在加载动画与浏览器标题                          |
+| `VITE_SITE_AUTHOR`     | 作者名，显示在底栏版权处                                      |
+| `VITE_SITE_KEYWORDS`   | 页面 `keywords`                                               |
+| `VITE_SITE_DES`        | 页面 `description`                                            |
+| `VITE_SITE_URL`        | 站点地址，可带 `http(s)://`，也可只写域名（底栏会自动补协议） |
+| `VITE_SITE_LOGO`       | 浏览器标签页图标，指向 `public/` 下的路径                     |
+| `VITE_SITE_MAIN_LOGO`  | 主页头像，指向 `public/` 下的路径                             |
+| `VITE_SITE_APPLE_LOGO` | iOS 添加到主屏的图标，指向 `public/` 下的路径                 |
+
+### 简介文本
+
+| 变量                    | 说明                           |
+| ----------------------- | ------------------------------ |
+| `VITE_DESC_HELLO`       | 简介卡片第一行（默认态）       |
+| `VITE_DESC_TEXT`        | 简介卡片正文（默认态）         |
+| `VITE_DESC_HELLO_OTHER` | 点击简介卡片展开盒子后的第一行 |
+| `VITE_DESC_TEXT_OTHER`  | 点击简介卡片展开盒子后的正文   |
+
+### 其他
+
+| 变量               | 说明                                                             |
+| ------------------ | ---------------------------------------------------------------- |
+| `VITE_WEATHER_KEY` | 高德开放平台 **Web 服务** 类型 Key；留空则使用第三方备用天气接口  |
+| `VITE_SITE_START`  | 建站日期，格式 `YYYY-MM-DD`（也可只写年份 `YYYY`）；留空则不显示  |
+| `VITE_SITE_ICP`    | ICP 备案号；留空则不显示                                         |
+
+### 音乐播放器
+
+| 变量               | 说明                                                |
+| ------------------ | --------------------------------------------------- |
+| `VITE_SONG_API`    | Meting API 地址                                     |
+| `VITE_SONG_SERVER` | `netease`（网易云）或 `tencent`（QQ 音乐）          |
+| `VITE_SONG_TYPE`   | `song` / `playlist` / `album` / `search` / `artist` |
+| `VITE_SONG_ID`     | 歌曲或歌单 ID；**留空则整个播放器不渲染**           |
+
+### 控制模块显隐的小技巧
+
+- 想关掉音乐播放器 → `VITE_SONG_ID` 留空
+- 想关掉建站天数统计 → `VITE_SITE_START` 留空
+- 想关掉备案号 → `VITE_SITE_ICP` 留空
+- 想换掉天气数据源 → `VITE_WEATHER_KEY` 留空，会自动回落到 `api.oioweb.cn`
+
+---
+
+## 定制指南
+
+### 网站链接（右侧九宫格）
+
+在 `src/assets/siteLinks.json` 中配置，每 6 项为一页自动分页：
 
 ```json
-{
-  "icon": "Blog",
-  "name": "博客",
-  "link": " "
-},
+[
+  {
+    "icon": "Blog",
+    "name": "博客",
+    "link": "https://example.com"
+  }
+]
 ```
 
-其中 `icon` 网站链接的图标可以在 `src/components/Links/index.vue` 中添加:
+`icon` 的可用取值来自 `src/components/Links.vue` 中引入的图标集合：
 
 ```js
 // 可前往 https://www.xicons.org 自行挑选并在此处引入
 // 此处引入的是 fa 类型
-import {
-  Link,
-  Blog,
-  CompactDisc,
-  Cloud,
-  Compass,
-  Book,
-  Fire,
-  LaptopCode,
-} from "@vicons/fa";
-
-...
+import { Link, Blog, CompactDisc, Cloud, Compass, Book, Fire, LaptopCode } from "@vicons/fa";
 
 // 网站链接图标
 const siteIcon = {
@@ -132,117 +185,183 @@ const siteIcon = {
 };
 ```
 
-### 社交链接
+新增图标时：先在 `Links.vue` 顶部 import，再把它加进 `siteIcon` 对象，最后在 JSON 里按名字引用。
 
-在 `src/assets/socialLinks.json` 中可以自定义社交链接。
+> 注意：`name` 为「音乐」的那一项有特殊逻辑 —— 开启设置面板中的「音乐点击是否打开面板」后，点击它会打开播放器面板而不是跳转外链。
 
-### 天气
+### 社交链接（左侧图标行）
 
-天气及地区获取需要 `高德开放平台` 相关 API
+在 `src/assets/socialLinks.json` 中配置：
 
-- 前往 [高德开放平台控制台](https://console.amap.com/dev/index) 创建一个 `Web 服务` 类型的 `Key`，并将 `Key` 填入 `.env` 中的 `VITE_WEATHER_KEY` 中
-
-也可自行更换其他方式
-
-### 音乐
-
-> 本项目采用了基于 `MetingJS` 的 `Aplayer` 音乐播放器，可实现快速自定义歌单  
-> \*仅支持 **中国大陆地区**
-
-请在 `.env` 文件中更改歌曲相关参数即可实现自定义歌单列表                                                  
-
-```bash
-# 歌曲 API 地址
-VITE_SONG_API = ""
-# 歌曲服务器 ( netease-网易云, tencent-qq音乐 )
-VITE_SONG_SERVER = "netease"
-# 播放类型 ( song-歌曲, playlist-播放列表, album-专辑, search-搜索, artist-艺术家 )
-VITE_SONG_TYPE = "playlist" 
-# 播放 ID
-VITE_SONG_ID = "7452421335"
+```json
+[
+  {
+    "name": "Github",
+    "icon": "/images/icon/github.png",
+    "tip": "去 Github 看看",
+    "url": "https://github.com/yourname"
+  }
+]
 ```
+
+`icon` 指向 `public/images/icon/` 下的图片，`tip` 是鼠标悬停时右侧显示的提示语。
+
+> ⚠️ `url` 请不要留空。空字符串会被浏览器解析为「当前页面地址」，点击后会变成刷新整页；不需要的项请直接从 JSON 数组中删除。
+
+### 壁纸
+
+本地壁纸放在 `public/images/` 下，命名规则为 `background + 数字 + .jpg`。
+
+新增壁纸后，需要同步修改 `src/components/Background.vue` 中的图片数量：
+
+```js
+// 壁纸随机数
+// 请依据文件夹内的图片个数修改 Math.random() 后面的第一个数字
+const bgRandom = Math.floor(Math.random() * 10 + 1);
+```
+
+壁纸类型在页面设置面板中切换（默认壁纸 / 每日一图 / 随机风景 / 随机动漫），选择结果会保存在浏览器 localStorage 中。
+
+### 网站图标
+
+替换 `public/images/icon/` 下的文件即可，常用文件：
+
+- `favicon.ico` — 浏览器标签页图标
+- `logo.png` — 主页头像
+- `apple-touch-icon.png` — iOS 添加到主屏图标
+- `48 / 72 / 96 / 128 / 144 / 192 / 512` 系列 PNG — PWA 图标
+
+> PWA 图标清单定义在 `vite.config.js` 的 `VitePWA` 插件配置中，新增尺寸需要同步更新 `manifest.icons`。
 
 ### 字体
 
-现采用 `HarmonyOS Sans` 开源字体，采用字体拆分，提升加载速度
+- **Logo 字体**：`src/style/style.scss` 中通过 `@font-face` 引入 `/font/Pacifico-Regular.ttf`。若只想保留 Logo 用到的字符，可用 `public/font/Pacifico-Regular-all.ttf` 做子集替换，替换后需同步修改 `style.scss` 中的 `src` 路径。
+- **中文字体**：采用 `HarmonyOS Sans`，在 `index.html` 中通过外部 CDN 引入。原项目的 CDN 开启了防盗链，非原项目域名无法访问，因此这里改用：
 
-> 由于本站 `CDN` 已开启防盗链，**非本站域名不可访问**，请将字体引入链接更改为下方内容，否则 **自定义字体将失效**
->
-> `https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css`
+  ```html
+  <link rel="stylesheet" href="https://s1.hdslb.com/bfs/static/jinkela/long/font/regular.css" />
+  ```
 
-<details>
-<summary>旧版方式</summary>
+  该字体来自第三方站点，若担心可用性，建议自行托管该 CSS 与字体文件。
 
-> 由于本项目引入了中文字体，需要压缩中文字体以提高网页加载速度（ 也可以取消使用中文字体 ）
+### 更新日志内容
 
-#### 中文字体去除繁体
-
-- 安装 `Python 3.7` 和 `pip`
-- 运行 `pip install fonttools`
-- 下载 [sc_unicode.txt](https://gist.githubusercontent.com/imaegoo/d64e5088b723c2e02c40985f55ff12db/raw/5ebd2ce49418c73459a9dfe050483409306a6c1d/sc_unicode.txt)
-- 运行 `pyftsubset 字体名称.ttf --unicodes-file=sc_unicode.txt`
-
-#### 字体进一步压缩
-
-- 编译安装 `Google woff2`
-
-```bash
-sudo apt-get install -y git g++ make
-git clone --recursive https://github.com/google/woff2.git
-cd woff2
-make clean all
-```
-
-- 再压缩字体
-
-```
-./woff2_compress ./字体名称.ttf
-```
-
-- 最终可对原字体进行缓加载，**先行加载压缩后的字体**
-
-> 详细信息可前往 [虹墨空间站](https://www.imaegoo.com/2020/chinese-font-compress/) 查看原文
-
-</details>
-
-### 网站图标及网站背景
-
-#### 网站背景
-
-可以在 `public/images` 中修改网站背景
-
-如果想要添加更多的本地图片作为网站背景，可以将图片重命名 `background+数字` 的形式，并在 `src/components/Background/index.vue` 中进行修改：
+设置面板左侧的更新日志是写死的，位于 `src/views/MoreSet/index.vue` 的 `upData` 中：
 
 ```js
-if (type == 0) {
-  // 修改此处 Math.random() 后面的第一个数字为图片的数量
-  bgUrl.value = `/images/background${Math.floor(Math.random() * 10 + 1)}.webp`;
-}
+const upData = reactive({
+  new: ["...", "..."],
+  fix: ["...", "..."],
+});
 ```
 
-#### 网站图标
+### 盒子（右侧详情面板）内容
 
-可以在 `public/images/icon` 中修改网站图标。
+默认是一个占位组件 `src/components/MoreContent.vue`，可以在其中放置任意想展示的内容。当前盒子内已包含「时光胶囊」组件，挂载位置在 `src/views/Box/index.vue`。
 
-### 技术栈
+---
 
-- [Vue](https://cn.vuejs.org/)
-- [Vite](https://vitejs.cn/vite3-cn/)
-- [Pinia](https://pinia.vuejs.org/zh/)
-- [IconPark](https://iconpark.oceanengine.com/official)
-- [xicons](https://xicons.org/)
-- [Aplayer](https://aplayer.js.org/)
+## 部署
 
-### API
+### 静态托管（推荐）
 
-- [韩小韩 WebAPI 接口](https://api.vvhan.com/)
-- [搏天 API](https://api.btstu.cn/doc/sjbz.php)
-- [教书先生 API](https://api.oioweb.cn/doc/weather/GetWeather)
-- [高德开放平台](https://lbs.amap.com/)
+```bash
+pnpm build
+```
+
+构建产物在 `dist/` 目录，直接将该目录下的文件上传到任意静态服务器 / 对象存储即可。
+
+### Docker
+
+```bash
+docker build -t home .
+docker run -p 12445:12445 -d home
+```
+
+或使用 compose：
+
+```bash
+docker compose up -d
+```
+
+> `Dockerfile` 中会在缺少 `.env` 时尝试复制 `.env.example`。**请确保构建上下文里有 `.env` 或 `.env.example`**，否则构建出的站点会缺失全部站点信息。
+
+### Vercel / Netlify 等平台
+
+1. 将仓库导入平台
+2. 在平台的环境变量设置中，按 `.env.example` 逐项填入 `VITE_*` 变量
+3. 构建命令填 `pnpm build`，输出目录填 `dist`
+
+> 本项目是纯前端应用，没有服务端依赖，任何静态托管方式都可以。
+
+---
+
+## 目录结构
+
+```
+home-dev/
+├─ public/                          # 不参与打包，原样拷贝到 dist
+│  ├─ font/                         # 字体文件
+│  └─ images/
+│     ├─ background1~10.jpg         # 本地壁纸
+│     └─ icon/                      # 站点图标、社交图标
+├─ screenshots/                     # README 配图
+├─ src/
+│  ├─ api/index.js                  # 一言 / 高德天气 / 歌单接口封装
+│  ├─ assets/
+│  │  ├─ siteLinks.json             # 网站链接配置
+│  │  └─ socialLinks.json           # 社交链接配置
+│  ├─ components/                   # 背景、底栏、一言、音乐、播放器、设置面板等
+│  ├─ store/index.js                # Pinia 全局状态（部分字段持久化到 localStorage）
+│  ├─ style/
+│  │  ├─ global.scss                # 全局变量与 mixin
+│  │  └─ style.scss                 # 全局样式，仅在 main.js 中引入一次
+│  ├─ utils/                        # 时间处理、防抖、自定义鼠标
+│  ├─ views/
+│  │  ├─ Main/                      # 主界面左右两栏
+│  │  ├─ Box/                       # 右侧盒子面板
+│  │  ├─ Func/                      # 时间与天气功能区
+│  │  └─ MoreSet/                   # 设置页
+│  ├─ App.vue                       # 根组件，负责整体布局与全局事件
+│  └─ main.js                       # 入口
+├─ index.html                       # 入口 HTML，通过 %VITE_*% 注入站点信息
+├─ vite.config.js                   # Vite / PWA / SCSS 配置
+├─ Dockerfile                       # 构建 + 运行镜像
+├─ docker-compose.yml
+└─ .env                             # 本地配置，不入库
+```
+
+> 关于 `src/style/global.scss`：它通过 `vite.config.js` 的 `additionalData` 被注入到**每一个** SCSS 块中，因此请只在这里放变量、mixin 和函数，不要写会实际输出 CSS 的规则，否则每个组件的样式里都会多出一份。
+
+---
+
+## 待办 / 已知问题
+
+- [ ] `VITE_SITE_APPLE_LOGO` 指向 `/images/logo/...`，但实际文件在 `/images/icon/` 下，iOS 主屏图标会 404
+- [ ] `src/assets/siteLinks.json` 与 `socialLinks.json` 中多项 `link` / `url` 为空，点击会打开空白页或刷新当前页
+- [ ] 仓库尚未初始化 Git，建议先执行 `git init` 建立版本管理
+- [ ] `Dockerfile` 使用 `npm install`，而仓库锁定文件为 `pnpm-lock.yaml`，依赖版本不可复现
+- [ ] 未处理 `prefers-reduced-motion` 降级，以及 `backdrop-filter` 在低端设备上的性能开销
+- [ ] `favicon.ico` 体积偏大（约 270 KB），建议重新导出
+
+---
+
+## 致谢
+
+**特别感谢原项目作者 [imsyy](https://imsyy.top)。** 本项目从功能设计到绝大多数实现都来自他的开源作品 [imsyy/home](https://github.com/imsyy/home)，我只是在此之上做了个人化的定制与整理。如果这个项目对你有帮助，请去给原仓库点一个 Star。
+
+[LICENSE](./LICENSE) 与 `src/style/style.scss` 头部的版权声明均属原作者，请勿删除。
+
+用到的第三方服务与接口：
+
 - [Hitokoto 一言](https://hitokoto.cn/)
+- [高德开放平台](https://lbs.amap.com/)
+- [教书先生 API](https://api.oioweb.cn/doc/weather/GetWeather)
+- [韩小韩 WebAPI](https://api.vvhan.com/)
+- [搏天 API](https://api.btstu.cn/doc/sjbz.php)
 
-## Star History
+## 许可
 
-[![Star History Chart](https://api.star-history.com/svg?repos=imsyy/home&type=Date)](https://star-history.com/#imsyy/home&Date)
+[MIT](./LICENSE) © 2022 [imsyy](https://imsyy.top)（原作者）
 
-<a title="SSL" target="_blank" href="https://myssl.com/seal/detail?domain=blog.imsyy.top"><img src="https://img.shields.io/badge/MySSL-安全认证-brightgreen"></a>&nbsp;<a title="CDN" target="_blank" href="https://cdnjs.com/"><img src="https://img.shields.io/badge/CDN-Cloudflare-blue"></a>&nbsp;<a title="Copyright" target="_blank" href="https://imsyy.top/"><img src="https://img.shields.io/badge/Copyright%20%C2%A9%202020--2023-%E7%84%A1%E5%90%8D-red"></a>
+本仓库在其基础上修改，同样遵循 MIT 协议。
