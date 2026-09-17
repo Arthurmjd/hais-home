@@ -30,6 +30,7 @@ import { Error } from "@icon-park/vue-next";
 const store = mainStore();
 const bgUrl = ref(null);
 const imgTimeout = ref(null);
+const fallbackTimeout = ref(null);
 const emit = defineEmits(["loadComplete"]);
 
 // 壁纸随机数
@@ -39,7 +40,7 @@ const bgRandom = Math.floor(Math.random() * 10 + 1);
 // 更换壁纸链接
 const changeBg = (type) => {
   if (type == 0) {
-    bgUrl.value = `/images/background${bgRandom}.jpg`;
+    bgUrl.value = `/images/background${bgRandom}.webp`;
   } else if (type == 1) {
     bgUrl.value = "https://api.dujin.org/bing/1920.php";
   } else if (type == 2) {
@@ -51,6 +52,7 @@ const changeBg = (type) => {
 
 // 图片加载完成
 const imgLoadComplete = () => {
+  clearTimeout(fallbackTimeout.value);
   imgTimeout.value = setTimeout(
     () => {
       store.setImgLoadStatus(true);
@@ -76,7 +78,7 @@ const imgLoadError = () => {
       fill: "#efefef",
     }),
   });
-  bgUrl.value = `/images/background${bgRandom}.jpg`;
+  bgUrl.value = `/images/background${bgRandom}.webp`;
 };
 
 // 监听壁纸切换
@@ -90,10 +92,18 @@ watch(
 onMounted(() => {
   // 加载壁纸
   changeBg(store.coverType);
+  // 远端壁纸接口可能挂起，8 秒未加载成功则回退到本地壁纸
+  fallbackTimeout.value = setTimeout(() => {
+    if (!store.imgLoadStatus) {
+      console.warn("壁纸加载超时，已回退到默认壁纸");
+      bgUrl.value = `/images/background${bgRandom}.webp`;
+    }
+  }, 8000);
 });
 
 onBeforeUnmount(() => {
   clearTimeout(imgTimeout.value);
+  clearTimeout(fallbackTimeout.value);
 });
 </script>
 

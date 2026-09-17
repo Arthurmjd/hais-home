@@ -74,16 +74,17 @@ const siteIcon = {
 
 // 链接跳转
 const jumpLink = (data) => {
-  if (data.name === "音乐" && store.musicClick) {
-    if (typeof $openList === "function") $openList();
+  if (data.name === "音乐" && store.musicClick && typeof window.$openList === "function") {
+    window.$openList();
+  } else if (!data.link || !data.link.trim()) {
+    ElMessage({
+      message: `「${data.name}」暂未配置链接`,
+      grouping: true,
+    });
   } else {
     window.open(data.link, "_blank");
   }
 };
-
-onMounted(() => {
-  console.log(siteLinks);
-});
 </script>
 
 <style lang="scss" scoped>

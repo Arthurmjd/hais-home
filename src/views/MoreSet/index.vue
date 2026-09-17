@@ -54,6 +54,7 @@
 <script setup>
 import { CloseOne, SettingTwo, GithubOne, AddOne, Bug } from "@icon-park/vue-next";
 import { mainStore } from "@/store";
+import { getSiteUrlParts } from "@/utils/siteUrl.js";
 import Set from "@/components/Set.vue";
 import config from "@/../package.json";
 
@@ -61,26 +62,22 @@ const store = mainStore();
 const closeShow = ref(false);
 
 // 站点链接
-const siteUrl = computed(() => {
-  const url = import.meta.env.VITE_SITE_URL;
-  if (!url) return "imsyy.top".split(".");
-  // 判断协议前缀
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    const urlFormat = url.replace(/^(https?:\/\/)/, "");
-    return urlFormat.split(".");
-  }
-  return url.split(".");
-});
+const siteUrl = computed(getSiteUrlParts);
 
 // 更新日志
 const upData = reactive({
   new: [
-    "采用 Vue 进行重构",
-    "音乐歌单支持快速自定义",
-    "壁纸支持个性化设置",
-    "音乐播放器支持音量控制",
+    "README 与 .env.example 配置模板重写",
+    "构建产物拆包，音乐播放器按需加载",
+    "字体转 woff2，壁纸转 WebP",
+    "PWA 缓存策略优化",
   ],
-  fix: ["修复天气 API", "时光胶囊显示错误", "移动端动画及细节", "图标更换为 IconPark"],
+  fix: [
+    "修复播放器空指针调用",
+    "修复空链接点击的异常行为",
+    "壁纸加载超时自动回退",
+    "恢复文本可选中与链接光标",
+  ],
 });
 
 // 跳转源代码仓库

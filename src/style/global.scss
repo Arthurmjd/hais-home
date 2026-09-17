@@ -1,36 +1,10 @@
-// scss 全局变量
+// scss 全局变量与混入
+// 注意：本文件通过 vite.config.js 的 additionalData 注入到每一个样式块，
+// 因此只能放变量和 mixin，禁止写会输出 CSS 的规则（否则产物中会重复 N 份）
 
 // 响应式布局
 @mixin changeWidth($maxWidth: 1200px) {
   .container {
     max-width: $maxWidth;
-  }
-}
-
-// 首次调用
-@include changeWidth;
-
-/* 小于1380px时 */
-@media (max-width: 1380px) {
-  .el-radio-group {
-    justify-content: center !important;
-  }
-}
-
-/* 小于1280px时 */
-@media (max-width: 1280px) {
-  @include changeWidth($maxWidth: 1100px);
-}
-
-/* 小于992px时 */
-@media (max-width: 992px) {
-  @include changeWidth($maxWidth: 900px);
-}
-
-/* 小于720px时 */
-@media (max-width: 720px) {
-  // 隐藏元素
-  .xs-hidden {
-    display: none;
   }
 }

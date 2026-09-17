@@ -39,6 +39,9 @@ const startDateText = ref(null);
 const timeInterval = ref(null);
 
 onMounted(() => {
+  // 首次立即渲染，避免 1 秒空白
+  timeData.value = getTimeCapsule();
+  if (startDate.value) startDateText.value = siteDateStatistics(new Date(startDate.value));
   timeInterval.value = setInterval(() => {
     timeData.value = getTimeCapsule();
     if (startDate.value) startDateText.value = siteDateStatistics(new Date(startDate.value));

@@ -1,8 +1,7 @@
 /*
-作者: imsyy
-主页：https://www.imsyy.top/
-GitHub：https://github.com/imsyy/home
-版权所有，请勿删除
+研习轩 - 个人主页
+作者: Axiuss
+站点: https://dxhyyds.top
 */
 
 @charset "utf-8";
@@ -27,7 +26,6 @@ a,
 p {
   margin: 0;
   padding: 0;
-  user-select: none;
   text-decoration: none;
   color: #fff;
   box-sizing: border-box;
@@ -47,13 +45,13 @@ a:hover {
 @font-face {
   font-family: "Pacifico-Regular";
   font-display: swap;
-  src: url("/font/Pacifico-Regular.ttf") format("truetype");
+  src: url("/font/Pacifico-Regular.woff2") format("woff2");
 }
 
 @font-face {
   font-family: "UnidreamLED";
   font-display: swap;
-  src: url("/font/UnidreamLED.ttf") format("truetype");
+  src: url("/font/UnidreamLED.woff2") format("woff2");
 }
 
 // 基础样式
@@ -231,4 +229,44 @@ scrollbar {
 scrollbar-thumb {
   border-radius: 10px;
   background-color: #eeeeee;
+}
+
+// 全局布局宽度（自 global.scss 迁入，只输出一份）
+@include changeWidth;
+
+/* 小于1380px时 */
+@media (max-width: 1380px) {
+  .el-radio-group {
+    justify-content: center !important;
+  }
+}
+
+/* 小于1280px时 */
+@media (max-width: 1280px) {
+  @include changeWidth($maxWidth: 1100px);
+}
+
+/* 小于992px时 */
+@media (max-width: 992px) {
+  @include changeWidth($maxWidth: 900px);
+}
+
+/* 小于720px时 */
+@media (max-width: 720px) {
+  // 隐藏元素
+  .xs-hidden {
+    display: none;
+  }
+}
+
+// 动画降级：尊重系统"减少动态效果"设置
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

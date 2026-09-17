@@ -31,9 +31,12 @@
 <script setup>
 import { getCurrentTime } from "@/utils/getTime";
 import { mainStore } from "@/store";
-import Music from "@/components/Music.vue";
+import { defineAsyncComponent } from "vue";
 import Hitokoto from "@/components/Hitokoto.vue";
 import Weather from "@/components/Weather.vue";
+
+// 音乐播放器按需加载：不开启播放器时不占用首屏体积
+const Music = defineAsyncComponent(() => import("@/components/Music.vue"));
 
 const store = mainStore();
 

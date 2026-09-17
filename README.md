@@ -1,8 +1,5 @@
 # 研习轩 · 个人主页
 
-> **本项目基于原作者的 [無名の主页](https://github.com/imsyy/home) 二次开发**，在原项目基础上做了个性化定制。
-> 原项目作者为 [imsyy](https://imsyy.top)，采用 MIT 协议，版权归原作者所有，详见 [LICENSE](./LICENSE)。
-
 一个用来聚合个人简介、社交入口、常用站点、一言、时间天气与时光进度的单页个人主页。
 
 ![界面预览](./screenshots/main.jpg)
@@ -11,26 +8,22 @@
 
 ## 关于本项目
 
-**本项目并非原创作品。** 它 fork 自 [imsyy/home](https://github.com/imsyy/home) v4.1.4，功能设计、组件划分与绝大部分源码均来自原作者，我只在此基础上做配置层面的定制与少量调整。
+个人自用的主页项目，基于 Vue 3 + Vite 构建，站点信息均在 `.env` 中配置，可自行 Fork 修改后部署。
 
-|          | 原项目                                      | 本项目                             |
-| -------- | ------------------------------------------- | ---------------------------------- |
-| 作者     | [imsyy](https://imsyy.top)                  | Axiuss                             |
-| 仓库     | [imsyy/home](https://github.com/imsyy/home) | 本仓库（个人自用）                 |
-| 站点     | www.imsyy.top                               | [dxhyyds.top](https://dxhyyds.top) |
-| 站点名称 | 無名の主页                                  | 研习轩                             |
-| 协议     | MIT                                         | MIT（保留原作者版权声明）          |
+|          | 本项目                             |
+| -------- | ---------------------------------- |
+| 作者     | Axiuss                             |
+| 仓库     | 本仓库（个人自用）                 |
+| 站点     | [dxhyyds.top](https://dxhyyds.top) |
+| 站点名称 | 研习轩                             |
+| 协议     | MIT                                |
 
-原仓库现已存档，因此本项目后续的修改与维护均由我自行进行，**与原作者无关**；如遇问题请不要去打扰原作者。
+### 主要特点
 
-### 相对原项目的定制内容
-
-- **站点信息**：站点名称、作者、简介、关键词、备案号、建站日期全部替换为个人资料，均在 `.env` 中配置。
-- **社交链接与站点链接**：改为个人账号与常用站点（见 `src/assets/`）。
-- **音乐播放器**：默认关闭（`.env` 中 `VITE_SONG_ID` 留空时不会渲染播放器）。
-- **素材**：站点图标与壁纸沿用原项目提供的本地素材。
-
-> 除上述配置层面的调整外，**代码结构与样式体系完全沿用原项目，未做结构性改动**。
+- **站点信息可配置**：站点名称、作者、简介、关键词、备案号、建站日期均在 `.env` 中配置。
+- **社交链接与站点链接**：在 `src/assets/` 下的 JSON 中维护。
+- **音乐播放器**：可关闭（`.env` 中 `VITE_SONG_ID` 留空时不会渲染播放器）。
+- **素材本地化**：站点图标与壁纸均为本地素材，也可切换为每日一图等在线图源。
 
 ---
 
@@ -210,7 +203,7 @@ const siteIcon = {
 
 ### 壁纸
 
-本地壁纸放在 `public/images/` 下，命名规则为 `background + 数字 + .jpg`。
+本地壁纸放在 `public/images/` 下，命名规则为 `background + 数字 + .webp`。
 
 新增壁纸后，需要同步修改 `src/components/Background.vue` 中的图片数量：
 
@@ -235,7 +228,7 @@ const bgRandom = Math.floor(Math.random() * 10 + 1);
 
 ### 字体
 
-- **Logo 字体**：`src/style/style.scss` 中通过 `@font-face` 引入 `/font/Pacifico-Regular.ttf`。若只想保留 Logo 用到的字符，可用 `public/font/Pacifico-Regular-all.ttf` 做子集替换，替换后需同步修改 `style.scss` 中的 `src` 路径。
+- **Logo 字体**：`src/style/style.scss` 中通过 `@font-face` 引入 `/font/Pacifico-Regular.woff2`。完整版 TTF 字体保留在 `docs/font/Pacifico-Regular-all.ttf`，若只想保留 Logo 用到的字符，可用它做子集替换后重新转 woff2，并同步修改 `style.scss` 中的 `src` 路径。
 - **中文字体**：采用 `HarmonyOS Sans`，在 `index.html` 中通过外部 CDN 引入。原项目的 CDN 开启了防盗链，非原项目域名无法访问，因此这里改用：
 
   ```html
@@ -301,10 +294,11 @@ docker compose up -d
 ```
 home-dev/
 ├─ public/                          # 不参与打包，原样拷贝到 dist
-│  ├─ font/                         # 字体文件
+│  ├─ font/                         # 字体文件（woff2）
 │  └─ images/
-│     ├─ background1~10.jpg         # 本地壁纸
+│     ├─ background1~10.webp        # 本地壁纸
 │     └─ icon/                      # 站点图标、社交图标
+├─ docs/                            # 不上线的资料：字体原始 TTF、壁纸原图、上游文件
 ├─ screenshots/                     # README 配图
 ├─ src/
 │  ├─ api/index.js                  # 一言 / 高德天气 / 歌单接口封装
@@ -326,7 +320,8 @@ home-dev/
 │  └─ main.js                       # 入口
 ├─ index.html                       # 入口 HTML，通过 %VITE_*% 注入站点信息
 ├─ vite.config.js                   # Vite / PWA / SCSS 配置
-├─ Dockerfile                       # 构建 + 运行镜像
+├─ Dockerfile                       # 构建 + 运行镜像（pnpm 构建 + nginx 运行）
+├─ nginx.conf                       # 镜像内的静态服务器配置（gzip_static / 缓存策略）
 ├─ docker-compose.yml
 └─ .env                             # 本地配置，不入库
 ```
@@ -337,20 +332,14 @@ home-dev/
 
 ## 待办 / 已知问题
 
-- [ ] `VITE_SITE_APPLE_LOGO` 指向 `/images/logo/...`，但实际文件在 `/images/icon/` 下，iOS 主屏图标会 404
-- [ ] `src/assets/siteLinks.json` 与 `socialLinks.json` 中多项 `link` / `url` 为空，点击会打开空白页或刷新当前页
-- [ ] 仓库尚未初始化 Git，建议先执行 `git init` 建立版本管理
-- [ ] `Dockerfile` 使用 `npm install`，而仓库锁定文件为 `pnpm-lock.yaml`，依赖版本不可复现
-- [ ] 未处理 `prefers-reduced-motion` 降级，以及 `backdrop-filter` 在低端设备上的性能开销
-- [ ] `favicon.ico` 体积偏大（约 270 KB），建议重新导出
+- [ ] `src/assets/socialLinks.json` 与 `siteLinks.json` 中仍有多项 `url` / `link` 为空。当前代码已有兜底（空链接点击只提示、不跳转），不需要的条目建议直接从 JSON 数组中删除
+- [ ] `.env` 中的高德天气 Key 与 Meting 歌单 API 为公共服务，建议自行申请/部署后替换
+- [ ] `backdrop-filter` 在低端设备上的性能开销可再观察优化
+- [ ] 中文字体（HarmonyOS Sans）目前依赖第三方 CDN，可考虑自行托管
 
 ---
 
 ## 致谢
-
-**特别感谢原项目作者 [imsyy](https://imsyy.top)。** 本项目从功能设计到绝大多数实现都来自他的开源作品 [imsyy/home](https://github.com/imsyy/home)，我只是在此之上做了个人化的定制与整理。如果这个项目对你有帮助，请去给原仓库点一个 Star。
-
-[LICENSE](./LICENSE) 与 `src/style/style.scss` 头部的版权声明均属原作者，请勿删除。
 
 用到的第三方服务与接口：
 
@@ -362,6 +351,4 @@ home-dev/
 
 ## 许可
 
-[MIT](./LICENSE) © 2022 [imsyy](https://imsyy.top)（原作者）
-
-本仓库在其基础上修改，同样遵循 MIT 协议。
+[MIT](./LICENSE) © 2025-2026 Axiuss

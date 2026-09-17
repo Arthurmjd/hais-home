@@ -34,10 +34,20 @@ export default ({ mode }) =>
               },
             },
             {
-              urlPattern: /(.*?)\.(png|jpe?g|svg|gif|bmp|psd|tiff|tga|eps)/, // 图片缓存
+              // 仅缓存本地静态图片
+              urlPattern: /\/images\/.*\.(png|jpe?g|svg|gif|webp)$/,
               handler: "CacheFirst",
               options: {
-                cacheName: "image-cache",
+                cacheName: "local-image-cache",
+              },
+            },
+            {
+              // 远端壁纸接口走网络优先，避免 CacheFirst 导致"每日一图"不更新
+              urlPattern: /^https:\/\/(api\.vvhan\.com|api\.dujin\.org)\/.*/i,
+              handler: "NetworkFirst",
+              options: {
+                cacheName: "remote-wallpaper-cache",
+                networkTimeoutSeconds: 5,
               },
             },
           ],
@@ -117,6 +127,16 @@ export default ({ mode }) =>
       terserOptions: {
         compress: {
           pure_funcs: ["console.log"],
+        },
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vue: ["vue", "pinia", "pinia-plugin-persistedstate"],
+            element: ["element-plus"],
+            swiper: ["swiper", "swiper/vue"],
+            icons: ["@icon-park/vue-next", "@vicons/fa", "@vicons/utils"],
+          },
         },
       },
     },
